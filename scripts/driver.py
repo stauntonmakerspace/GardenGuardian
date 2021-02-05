@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # https://maker.pro/nvidia-jetson/tutorial/how-to-use-gpio-pins-on-jetson-nano-developer-kit
-import RPi.GPIO as GPIO
+import Jetson.GPIO as GPIO
 from geometry_msgs.msg import Twist
 import rospy
 
 # Set the GPIO modes
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 _FREQUENCY = 20
@@ -101,12 +101,11 @@ class Driver:
                 self._right_motor.move(0)
             rate.sleep()
 
-
-def main():
-    driver = Driver()
-    # Run driver. This will block
-    driver.run()
-
-
 if __name__ == '__main__':
-    main()
+    try:
+        driver = Driver()
+        # Run driver. This will block
+        driver.run()
+    finally:
+        GPIO.cleanup()
+
