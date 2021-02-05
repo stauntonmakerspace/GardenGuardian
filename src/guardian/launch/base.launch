@@ -1,0 +1,13 @@
+
+<launch>
+  <include file="$(find realsense2_camera)/launch/rs_t265.launch" /> 
+
+  <include file="$(find freenect_launch)/launch/freenect.launch"/>
+
+  <node pkg="guardian" type="driver.py" name="base_controller"/>
+
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan"/>
+  
+  <node pkg="tf" type="static_transform_publisher" name="scan_base_link" args="0 0 0 0 0 0 /base_link /laser_frame 100"/> 
+
+</launch>

@@ -1,8 +1,0 @@
-
-<launch>
-  <include file="$(find realsense2_camera)/launch/rs_t265.launch" />
-
-   <node pkg="realsense2_camera" type="sensor_node_type" name="sensor_node_name" output="screen">
-    
- </node>
-</launch>
