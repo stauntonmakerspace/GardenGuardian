@@ -2,9 +2,9 @@
 <launch>
   <include file="$(find realsense2_camera)/launch/rs_t265.launch" /> 
 
-  <node pkg="guardian" type="driver.py" name="base_controller"/>
+  <!--<node pkg="garden_guardian" type="driver.py" name="base_controller"/>-->
 
-  <include file="$(find astra_camera)/astra.launch"/>
+  <include file="$(find astra_camera)/launch/astra.launch"/>
 
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
     <remap from="cloud_in" to="/camera/depth/points"/>
@@ -32,7 +32,5 @@
   </node>
 
   <node pkg="tf" type="static_transform_publisher" name="cam_base_link" args="0 0 0 0 0 0 /base_link /camera_link 100"/> 
-
-  <node pkg="tf" type="static_transform_publisher" name="scan_base_link" args="0 0 0 0 0 0 /base_link /scan 100"/> 
 
 </launch>
