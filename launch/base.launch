@@ -4,9 +4,8 @@
 
   <node pkg="guardian" type="driver.py" name="base_controller"/>
 
-  <!-- <remap from="/camera/odom/sample" to="/odom"/> -->
+  <include file="$(find astra_camera)/astra.launch"/>
 
-  <include file="$(find freenect_launch)/launch/freenect.launch"/>
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
     <remap from="cloud_in" to="/camera/depth/points"/>
     <rosparam>
@@ -31,7 +30,9 @@
     </rosparam>
     <!-- <rosparam file="$(find guardian)/params/base_local_planner_params.yaml" command="load" /> -->
   </node>
-  
+
+  <node pkg="tf" type="static_transform_publisher" name="cam_base_link" args="0 0 0 0 0 0 /base_link /camera_link 100"/> 
+
   <node pkg="tf" type="static_transform_publisher" name="scan_base_link" args="0 0 0 0 0 0 /base_link /scan 100"/> 
 
 </launch>
