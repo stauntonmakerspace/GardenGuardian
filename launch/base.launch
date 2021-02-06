@@ -1,15 +1,12 @@
 
 <launch>
-
-  <remap from="/camera/odom/sample" to="/odom"/>
   <include file="$(find realsense2_camera)/launch/rs_t265.launch" /> 
-
-  <include file="$(find freenect_launch)/launch/freenect.launch"/>
 
   <node pkg="guardian" type="driver.py" name="base_controller"/>
 
   <!-- <remap from="/camera/odom/sample" to="/odom"/> -->
 
+  <include file="$(find freenect_launch)/launch/freenect.launch"/>
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
     <remap from="cloud_in" to="/camera/depth/points"/>
     <rosparam>
