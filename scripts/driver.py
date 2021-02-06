@@ -22,12 +22,14 @@ def _clip(value, minimum, maximum):
 
 
 class Motor:
-    def __init__(self, speed_pin, direction_pin):
+    def __init__(self, speed_pin, direction_pinA, direction_pinB):
         self._speed_pin = speed_pin
-        self._direction_pin = direction_pin
+        self._direction_pinA = direction_pinA
+        self._direction_pinB = direction_pinB
 
         GPIO.setup(speed_pin, GPIO.OUT)
-        GPIO.setup(direction_pin, GPIO.OUT)
+        GPIO.setup(direction_pinA, GPIO.OUT)
+        GPIO.setup(direction_pinB, GPIO.OUT)
 
         self._speed_pwm = GPIO.PWM(speed_pin, _FREQUENCY)
 
@@ -35,7 +37,8 @@ class Motor:
         speed = _clip(abs(speed_percent), 0, 100)
         self._speed_pwm.start(speed)
         # Positive speeds move wheels forward, negative speeds move wheels backward
-        GPIO.output(self._direction_pin, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
+        GPIO.output(self._direction_pinA, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
+        GPIO.output(self._direction_pinB, GPIO.LOW if speed_percent > 0 else GPIO.HIGH)
 
 
 class Driver:
@@ -50,8 +53,8 @@ class Driver:
 
         # Assign pins to motors. These may be distributed
         # differently depending on how you've built your robot
-        self._left_motor = Motor(10, 9)
-        self._right_motor = Motor(8, 7)
+        self._left_motor = Motor(11, 13, 15)
+        self._right_motor = Motor(19, 21, 23)
         self._left_speed_percent = 0
         self._right_speed_percent = 0
 
