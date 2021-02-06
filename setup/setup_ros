@@ -5,17 +5,17 @@ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31
 
 sudo apt-get update
 
-sudo apt-get install ros-kinetic-ros-base
+sudo apt-get install ros-melodic-ros-base
 
 sudo apt-get install \
-ros-kinetic-realsense2-camera \
-ros-kinetic-slam-gmapping \
-ros-kinetic-freenect-launch \
-ros-kinetic-teleop_twist_joy \
-ros-kinetic-joy \
-ros-kinetic-explore-lite
+ros-melodic-realsense2-camera \
+ros-melodic-slam-gmapping \
+ros-melodic-freenect-launch \
+ros-melodic-teleop_twist_joy \
+ros-melodic-joy \
+ros-melodic-explore-lite
 
-echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential

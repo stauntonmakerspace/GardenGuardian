@@ -1,3 +1,3 @@
 # 
 ## Setup 
-install ros kinetic 
+install ros melodic 
