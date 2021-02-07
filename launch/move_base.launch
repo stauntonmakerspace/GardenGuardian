@@ -2,7 +2,7 @@
    <!-- Run the map server -->
    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
       <param name="base_frame" value="base_link" />
-      <param name="odom_frame" value="camera_odom_frame" />
+      <param name="odom_frame" value="odom" />
       <param name="delta" value="0.01" />
       <param name="xmin" value="-5" />
       <param name="ymin" value="-5" />

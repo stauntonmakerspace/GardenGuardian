@@ -31,8 +31,14 @@
     <!-- <rosparam file="$(find guardian)/params/base_local_planner_params.yaml" command="load" /> -->
   </node>
 
-  <node pkg="tf" type="static_transform_publisher" name="cam_base_link" args="0 0 0 0 0 0 /base_link /camera_link 100"/> 
+  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 100"/> 
 
-  <node pkg="tf" type="static_transform_publisher" name="base_pose_link" args="0 0 0 0 0 0 /camera_pose_frame /base_link 100"/> 
+  <!-- These two transform publishers aren't technically necessary but it makes building 
+    configuration files and referencing existing documentation significantly easier. 
+    It also leaves an avenue open to include new odometer measurements and filtering 
+    as new data becomes available -->
+  <node pkg="tf" type="static_transform_publisher" name="pose_base_link" args="0 0 0 0 0 0 /camera_pose_frame /base_link 100"/> 
+
+  <node pkg="tf" type="static_transform_publisher" name="odom_odom_link" args="0 0 0 0 0 0 /camera_odom_frame /odom 100"/> 
 
 </launch>
