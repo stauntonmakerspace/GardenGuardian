@@ -3,7 +3,9 @@ ros-*-realsense2-camera \
 ros-*-slam-gmapping \
 ros-*-teleop_twist_joy \
 ros-*-joy \
-ros-*-explore-lite
+ros-*-explore-lite \
+ros-*-amcl \
+ros-*-move-base \
 
 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
 
