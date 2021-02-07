@@ -32,6 +32,7 @@
   </node>
 
   <node pkg="tf" type="static_transform_publisher" name="cam_base_link" args="0 0 0 0 0 0 /base_link /camera_link 100"/> 
-  <node pkg="tf" type="static_transform_publisher" name="cam_ase_link" args="0 0 0 0 0 0 /camera_odom_frame /base_link 100"/> 
+
+  <node pkg="tf" type="static_transform_publisher" name="base_pose_link" args="0 0 0 0 0 0 /camera_pose_frame /base_link 100"/> 
 
 </launch>
