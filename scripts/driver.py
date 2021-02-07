@@ -1,12 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # https://maker.pro/nvidia-jetson/tutorial/how-to-use-gpio-pins-on-jetson-nano-developer-kit
-import Jetson.GPIO as GPIO
-from geometry_msgs.msg import Twist
-import rospy
+# import Jetson.GPIO as GPIO
 
+import rospy
+from geometry_msgs.msg import Twist
 # Set the GPIO modes
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
+# GPIO.setmode(GPIO.BOARD)
+# GPIO.setwarnings(False)
 
 _FREQUENCY = 20
 
@@ -27,18 +27,18 @@ class Motor:
         self._direction_pinA = direction_pinA
         self._direction_pinB = direction_pinB
 
-        GPIO.setup(speed_pin, GPIO.OUT)
-        GPIO.setup(direction_pinA, GPIO.OUT)
-        GPIO.setup(direction_pinB, GPIO.OUT)
+        # GPIO.setup(speed_pin, GPIO.OUT)
+        # GPIO.setup(direction_pinA, GPIO.OUT)
+        # GPIO.setup(direction_pinB, GPIO.OUT)
 
-        self._speed_pwm = GPIO.PWM(speed_pin, _FREQUENCY)
+        # self._speed_pwm = GPIO.PWM(speed_pin, _FREQUENCY)
 
     def move(self, speed_percent):
         speed = _clip(abs(speed_percent), 0, 100)
-        self._speed_pwm.start(speed)
+        # self._speed_pwm.start(speed)
         # Positive speeds move wheels forward, negative speeds move wheels backward
-        GPIO.output(self._direction_pinA, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
-        GPIO.output(self._direction_pinB, GPIO.LOW if speed_percent > 0 else GPIO.HIGH)
+        # GPIO.output(self._direction_pinA, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
+        # GPIO.output(self._direction_pinB, GPIO.LOW if speed_percent > 0 else GPIO.HIGH)
 
 
 class Driver:
@@ -110,5 +110,5 @@ if __name__ == '__main__':
         # Run driver. This will block
         driver.run()
     finally:
-        GPIO.cleanup()
+        pass # GPIO.cleanup()
 

@@ -2,7 +2,7 @@
 <launch>
   <include file="$(find realsense2_camera)/launch/rs_t265.launch" /> 
 
-  <!--<node pkg="garden_guardian" type="driver.py" name="base_controller"/>-->
+  <node pkg="garden_guardian" type="driver.py" name="base_controller"/>
 
   <include file="$(find astra_camera)/launch/astra.launch"/>
 
@@ -37,6 +37,7 @@
     configuration files and referencing existing documentation significantly easier. 
     It also leaves an avenue open to include new odometer measurements and filtering 
     as new data becomes available -->
+
   <node pkg="tf" type="static_transform_publisher" name="pose_base_link" args="0 0 0 0 0 0 /camera_pose_frame /base_link 100"/> 
 
   <node pkg="tf" type="static_transform_publisher" name="odom_odom_link" args="0 0 0 0 0 0 /camera_odom_frame /odom 100"/> 
