@@ -4,8 +4,6 @@
     <rosparam file="$(find tutorial_pkg)/config/exploration.yaml" command="load" />
 </node>
 -->
-<remap from="/camera/odom/sample" to="/odom"/>
-
 <include file="$(find garden_guardian)/launch/base.launch" /> 
 <include file="$(find garden_guardian)/launch/move_base.launch" /> 
 
