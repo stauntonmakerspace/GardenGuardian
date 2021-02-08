@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # https://maker.pro/nvidia-jetson/tutorial/how-to-use-gpio-pins-on-jetson-nano-developer-kit
 import Jetson.GPIO as GPIO
+from adafruit_servokit import ServoKit
+import board
+import busio
+import time
 
 import rospy
 from geometry_msgs.msg import Twist
@@ -10,6 +14,17 @@ GPIO.setwarnings(False)
 
 _FREQUENCY = 20
 
+
+# On the Jetson Nano
+# Bus 0 (pins 28,27) is board SCL_1, SDA_1 in the jetson board definition file
+# Bus 1 (pins 5, 3) is board SCL, SDA in the jetson definition file
+# Default is to Bus 1; We are using Bus 0, so we need to construct the busio first ...
+
+print("Initializing Servos")
+i2c_bus0=(busio.I2C(board.SCL_1, board.SDA_1))
+print("Initializing ServoKit")
+kit = ServoKit(channels=16, i2c=i2c_bus0)
+print("Done initializing")
 
 def _clip(value, minimum, maximum):
     """Ensure value is between minimum and maximum."""
@@ -22,20 +37,18 @@ def _clip(value, minimum, maximum):
 
 
 class Motor:
-    def __init__(self, speed_pin, direction_pinA, direction_pinB):
-        # self._speed_pin = speed_pin
+    def __init__(self, servo_num, direction_pinA, direction_pinB):
+        self._servo_num = servo_num
         self._direction_pinA = direction_pinA
         self._direction_pinB = direction_pinB
 
-        # GPIO.setup(speed_pin, GPIO.OUT)
         GPIO.setup(direction_pinA, GPIO.OUT)
         GPIO.setup(direction_pinB, GPIO.OUT)
 
-        # self._speed_pwm = GPIO.PWM(speed_pin, _FREQUENCY)
-
+      
     def move(self, speed_percent):
         speed = _clip(abs(speed_percent), 0, 100)
-        # self._speed_pwm.start(speed)
+        kit.servo[self._servo_num.start(speed)].angle = speed
         # Positive speeds move wheels forward, negative speeds move wheels backward
         GPIO.output(self._direction_pinA, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
         GPIO.output(self._direction_pinB, GPIO.LOW if speed_percent > 0 else GPIO.HIGH)
@@ -53,8 +66,8 @@ class Driver:
 
         # Assign pins to motors. These may be distributed
         # differently depending on how you've built your robot
-        self._left_motor = Motor(11, 13, 15)
-        self._right_motor = Motor(23, 21, 19)
+        self._left_motor = Motor(0, 13, 15)
+        self._right_motor = Motor(1, 21, 19)
         self._left_speed_percent = 0
         self._right_speed_percent = 0
 
