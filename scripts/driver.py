@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # https://maker.pro/nvidia-jetson/tutorial/how-to-use-gpio-pins-on-jetson-nano-developer-kit
-# import Jetson.GPIO as GPIO
+import Jetson.GPIO as GPIO
 
 import rospy
 from geometry_msgs.msg import Twist
 # Set the GPIO modes
-# GPIO.setmode(GPIO.BOARD)
-# GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
 
 _FREQUENCY = 20
 
@@ -23,13 +23,13 @@ def _clip(value, minimum, maximum):
 
 class Motor:
     def __init__(self, speed_pin, direction_pinA, direction_pinB):
-        self._speed_pin = speed_pin
+        # self._speed_pin = speed_pin
         self._direction_pinA = direction_pinA
         self._direction_pinB = direction_pinB
 
         # GPIO.setup(speed_pin, GPIO.OUT)
-        # GPIO.setup(direction_pinA, GPIO.OUT)
-        # GPIO.setup(direction_pinB, GPIO.OUT)
+        GPIO.setup(direction_pinA, GPIO.OUT)
+        GPIO.setup(direction_pinB, GPIO.OUT)
 
         # self._speed_pwm = GPIO.PWM(speed_pin, _FREQUENCY)
 
@@ -37,13 +37,13 @@ class Motor:
         speed = _clip(abs(speed_percent), 0, 100)
         # self._speed_pwm.start(speed)
         # Positive speeds move wheels forward, negative speeds move wheels backward
-        # GPIO.output(self._direction_pinA, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
-        # GPIO.output(self._direction_pinB, GPIO.LOW if speed_percent > 0 else GPIO.HIGH)
+        GPIO.output(self._direction_pinA, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
+        GPIO.output(self._direction_pinB, GPIO.LOW if speed_percent > 0 else GPIO.HIGH)
 
 
 class Driver:
     def __init__(self):
-        rospy.init_node('driver')
+        rospy.init_node('base_controller')
 
         self._last_received = rospy.get_time()
         self._timeout = rospy.get_param('~timeout', 3)
@@ -54,7 +54,7 @@ class Driver:
         # Assign pins to motors. These may be distributed
         # differently depending on how you've built your robot
         self._left_motor = Motor(11, 13, 15)
-        self._right_motor = Motor(19, 21, 23)
+        self._right_motor = Motor(23, 21, 19)
         self._left_speed_percent = 0
         self._right_speed_percent = 0
 
