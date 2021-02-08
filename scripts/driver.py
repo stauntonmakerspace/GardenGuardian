@@ -12,9 +12,6 @@ from geometry_msgs.msg import Twist
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
-_FREQUENCY = 20
-
-
 # On the Jetson Nano
 # Bus 0 (pins 28,27) is board SCL_1, SDA_1 in the jetson board definition file
 # Bus 1 (pins 5, 3) is board SCL, SDA in the jetson definition file
@@ -48,7 +45,7 @@ class Motor:
       
     def move(self, speed_percent):
         speed = _clip(abs(speed_percent), 0, 100)
-        kit.servo[self._servo_num.start(speed)].angle = speed
+        kit.servo[self._servo_num].angle = speed
         # Positive speeds move wheels forward, negative speeds move wheels backward
         GPIO.output(self._direction_pinA, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
         GPIO.output(self._direction_pinB, GPIO.LOW if speed_percent > 0 else GPIO.HIGH)
