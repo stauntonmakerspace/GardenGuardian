@@ -1,15 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.6
 # https://maker.pro/nvidia-jetson/tutorial/how-to-use-gpio-pins-on-jetson-nano-developer-kit
-import Jetson.GPIO as GPIO
+import RPi.GPIO as GPIO
 from adafruit_servokit import ServoKit
 import board
 import busio
 import time
-
+import sys
 import rospy
 from geometry_msgs.msg import Twist
 # Set the GPIO modes
-GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 # On the Jetson Nano
@@ -18,7 +17,7 @@ GPIO.setwarnings(False)
 # Default is to Bus 1; We are using Bus 0, so we need to construct the busio first ...
 
 print("Initializing Servos")
-i2c_bus0=(busio.I2C(board.SCL_1, board.SDA_1))
+i2c_bus0=(busio.I2C(board.SCL, board.SDA))
 print("Initializing ServoKit")
 kit = ServoKit(channels=16, i2c=i2c_bus0)
 print("Done initializing")
@@ -44,7 +43,7 @@ class Motor:
 
       
     def move(self, speed_percent):
-        speed = _clip(abs(speed_percent), 0, 100)
+        speed = _clip(abs(speed_percent), 0, 180)
         kit.servo[self._servo_num].angle = speed
         # Positive speeds move wheels forward, negative speeds move wheels backward
         GPIO.output(self._direction_pinA, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
@@ -58,13 +57,13 @@ class Driver:
         self._last_received = rospy.get_time()
         self._timeout = rospy.get_param('~timeout', 3)
         self._rate = rospy.get_param('~rate', 10)
-        self._max_speed = rospy.get_param('~max_speed', 0.5)
+        self._max_speed = rospy.get_param('~max_speed', 1)
         self._wheel_base = rospy.get_param('~wheel_base', 0.091)
 
         # Assign pins to motors. These may be distributed
         # differently depending on how you've built your robot
-        self._left_motor = Motor(0, 13, 15)
-        self._right_motor = Motor(1, 21, 19)
+        self._left_motor = Motor(0, 'LCD_TE', 'SPI2_SCK')
+        self._right_motor = Motor(1, 'SPI1_MISO', 'SPI1_MOSI')
         self._left_speed_percent = 0
         self._right_speed_percent = 0
 
@@ -92,9 +91,9 @@ class Driver:
         # into percent of maximum wheel speed, which gives us a
         # duty cycle that we can apply to each motor.
         self._left_speed_percent = (
-            100 * left_speed/self._max_speed)
+            180 * left_speed/self._max_speed)
         self._right_speed_percent = (
-            100 * right_speed/self._max_speed)
+            180 * right_speed/self._max_speed)
 
     def run(self):
         """The control loop of the driver."""
