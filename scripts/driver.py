@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.6
 # https://maker.pro/nvidia-jetson/tutorial/how-to-use-gpio-pins-on-jetson-nano-developer-kit
 import RPi.GPIO as GPIO
-from adafruit_servokit import ServoKit
+from adafruit_pca9685 import PCA9685
 import board
 import busio
 import time
@@ -16,10 +16,11 @@ GPIO.setwarnings(False)
 # Bus 1 (pins 5, 3) is board SCL, SDA in the jetson definition file
 # Default is to Bus 1; We are using Bus 0, so we need to construct the busio first ...
 
-print("Initializing Servos")
+print("Initializing I2C Connection")
 i2c_bus0=(busio.I2C(board.SCL, board.SDA))
-print("Initializing ServoKit")
-kit = ServoKit(channels=16, i2c=i2c_bus0)
+print("Initializing PCA9685")
+kit = PCA9685(i2c_bus0)
+kit.frequency = 50
 print("Done initializing")
 
 def _clip(value, minimum, maximum):
@@ -43,8 +44,8 @@ class Motor:
 
       
     def move(self, speed_percent):
-        speed = _clip(abs(speed_percent), 0, 180)
-        kit.servo[self._servo_num].angle = speed
+        speed = int(_clip(abs(speed_percent) * 0xffff, 0, 0xffff))
+        kit.channels[self._servo_num].duty_cycle = speed
         # Positive speeds move wheels forward, negative speeds move wheels backward
         GPIO.output(self._direction_pinA, GPIO.HIGH if speed_percent > 0 else GPIO.LOW)
         GPIO.output(self._direction_pinB, GPIO.LOW if speed_percent > 0 else GPIO.HIGH)
@@ -77,7 +78,7 @@ class Driver:
         self._last_received = rospy.get_time()
 
         # Extract linear and angular velocities from the message
-        linear = message.linear.x
+        linear = message.linear.x * 2
         angular = message.angular.z
 
         # Calculate wheel speeds in m/s
