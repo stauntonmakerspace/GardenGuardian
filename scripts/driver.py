@@ -78,7 +78,7 @@ class Driver:
         self._last_received = rospy.get_time()
 
         # Extract linear and angular velocities from the message
-        linear = message.linear.x * 2
+        linear = message.linear.x 
         angular = message.angular.z
 
         # Calculate wheel speeds in m/s
