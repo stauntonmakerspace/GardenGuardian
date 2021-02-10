@@ -82,8 +82,8 @@ class Driver:
         angular = message.angular.z
 
         # Calculate wheel speeds in m/s
-        left_speed = linear - angular*self._wheel_base/2
-        right_speed = linear + angular*self._wheel_base/2
+        left_speed = linear - angular * self._wheel_base/2
+        right_speed = linear + angular * self._wheel_base/2
 
         # Ideally we'd now use the desired wheel speeds along
         # with data from wheel speed sensors to come up with the
@@ -92,9 +92,9 @@ class Driver:
         # into percent of maximum wheel speed, which gives us a
         # duty cycle that we can apply to each motor.
         self._left_speed_percent = (
-            180 * left_speed/self._max_speed)
+            left_speed/self._max_speed)
         self._right_speed_percent = (
-            180 * right_speed/self._max_speed)
+            right_speed/self._max_speed)
 
     def run(self):
         """The control loop of the driver."""
