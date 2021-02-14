@@ -63,5 +63,5 @@
       <remap from="odom" to="/odometry/filtered" />
    
    </node>
-
+  <node pkg="tf" type="static_transform_publisher" name="pose_base_link" args="0 0 0 0 0 0 /camera_pose_frame /base_link 3"/> 
 </launch> 

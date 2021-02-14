@@ -76,7 +76,7 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
 
                 imu_msg = Imu()
                 imu_msg.header.stamp = rospy.Time.now()
-                imu_msg.header.frame_id = '/base_link'
+                imu_msg.header.frame_id = 'base_link'
 
                 imu_msg.orientation.x = magnetic_x
                 imu_msg.orientation.y = magnetic_y
@@ -97,7 +97,7 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
 
                 gps_msg = NavSatFix()
                 gps_msg.header.stamp = rospy.Time.now()
-                gps_msg.header.frame_id = '/base_link'
+                gps_msg.header.frame_id = 'base_link'
                 gps_msg.latitude = lat
                 gps_msg.longitude = long
                 gps_msg.altitude = alt
