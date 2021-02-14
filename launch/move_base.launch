@@ -41,38 +41,12 @@
 
     </rosparam>
    </node>
-
-  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true">
- 
-
-<param name="odom0" value="/camera/sample/odom"/>
-
-<rosparam param="odom0_config">[true,  true,  true,
-                                false, false, false,
-                                false, false, false,
-                                false, false, false,
-                                false, false, false]</rosparam>
-<param name="odom0_differential" value="false"/>
-
-    <param name="magnetic_declination_radians" value="0"/>
-	<param name="wait_for_datum" value="false"/>
-	<param name="zero_altitude" value="true"/>
-	<param name="two_d_mode" value="true"/>
-	<param name="broadcast_utm_transform" value="true"/>
-    <param name="yaw_offset" value="0"/>
-
-    <remap from="/imu/data" to="/imu/data" />
-    <remap from="/gps/fix" to="/navsat/fix" />
-    <remap from="/odometry/filtered" to="/camera/odom/sample" />
-
-  </node>
-
+	
    <!--- Run AMCL -->
    <!-- <include file="$(find amcl)/examples/amcl_diff.launch" /> -->
-
-   <rosparam command="load" file="$(find garden_guardian)/params/ekf_params.yaml" />
-   <rosparam command="load" file="$(find garden_guardian)/params/navsat_params.yaml" />
    
+<include file="$(find garden_guardian)/launch/include/localization_run.launch" /> 
+
 
    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
       <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
@@ -86,7 +60,7 @@
       <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
       <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
 
-      <remap from="odom" to="/outdoor_waypoint_nav/odometry/filtered" />
+      <remap from="odom" to="/odometry/filtered" />
    
    </node>
 
