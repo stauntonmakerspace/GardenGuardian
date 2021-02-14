@@ -3,16 +3,16 @@
 
   <rosparam command="load" file="$(find garden_guardian)/params/ekf_params.yaml" />
   <rosparam command="load" file="$(find garden_guardian)/params/navsat_params.yaml" />
-   <!-- Transform between base link and Adam frame is already provided by the T265 Transform between base link and Adam frame is already provided by the T265 -->
-  <!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true"/> -->
+  <!-- Transform between base link and Adam frame is already provided by the T265 Transform between base link and Adam frame is already provided by the T265 -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true" />
 
- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
-    
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
+    <remap from="odometry/filtered" to="odometry/filtered_map" />
   </node>
 
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true" output="screen">
-      <!--<remap from="odometry/filtered" to="odometry/filtered_map"/> -->
-      <remap from="gps/fix" to="/navsat/fix"/>
-      <remap from="imu/data" to="/imu/data"/>
+    <remap from="odometry/filtered" to="odometry/filtered_map" />
+    <remap from="gps/fix" to="/navsat/fix" />
+    <remap from="imu/data" to="/imu/data" />
   </node>
 </launch>

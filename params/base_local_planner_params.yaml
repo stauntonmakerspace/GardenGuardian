@@ -11,8 +11,6 @@ TrajectoryPlannerROS:
 
   holonomic_robot: false
 
-  # New Stuff
-
   escape_vel: -0.2
 
   # Goal Tolerance Parameters
