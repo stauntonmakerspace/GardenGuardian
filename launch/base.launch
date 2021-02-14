@@ -1,7 +1,12 @@
 
 <launch>
   <include file="$(find realsense2_camera)/launch/rs_t265.launch">
-<arg name="initial_reset" value="true" /></include> 
+<arg name="initial_reset" value="true" />
+<arg name="base_frame_id" value="base_link" />
+<arg name="odom_frame_id" value="odom" />
+<arg name="publish_odom_tf" value="false" />
+
+</include> 
 
   <node pkg="garden_guardian" type="driver.py" name="base_controller"/>
 
