@@ -16,8 +16,8 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
     iter_count = 0
     num_callibration_itrs = 60
 
-    gps_pub = rospy.Publisher('navsat/fix', NavSatFix, queue_size=50)
-    imu_pub = rospy.Publisher('imu/data', Imu, queue_size=50)
+    gps_pub = rospy.Publisher('phone/gps', NavSatFix, queue_size=50)
+    imu_pub = rospy.Publisher('phone/imu', Imu, queue_size=50)
     rospy.init_node('imu_publisher', anonymous=True)
     rate = rospy.Rate(pub_freq)
 
@@ -76,7 +76,7 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
 
                 imu_msg = Imu()
                 imu_msg.header.stamp = rospy.Time.now()
-                imu_msg.header.frame_id = 'base_link'
+                imu_msg.header.frame_id = 'phone_link'
 
                 imu_msg.orientation.x = magnetic_x
                 imu_msg.orientation.y = magnetic_y
@@ -97,7 +97,7 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
 
                 gps_msg = NavSatFix()
                 gps_msg.header.stamp = rospy.Time.now()
-                gps_msg.header.frame_id = 'base_link'
+                gps_msg.header.frame_id = 'phone_link'
                 gps_msg.latitude = lat
                 gps_msg.longitude = long
                 gps_msg.altitude = alt
