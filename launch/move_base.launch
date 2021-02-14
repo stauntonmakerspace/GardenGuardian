@@ -68,7 +68,11 @@
   </node>
 
    <!--- Run AMCL -->
-   <include file="$(find amcl)/examples/amcl_diff.launch" />
+   <!-- <include file="$(find amcl)/examples/amcl_diff.launch" /> -->
+
+   <rosparam command="load" file="$(find garden_guardian)/params/ekf_params.yaml" />
+   <rosparam command="load" file="$(find garden_guardian)/params/navsat_params.yaml" />
+   
 
    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
       <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
@@ -76,6 +80,14 @@
       <rosparam file="$(find garden_guardian)/params/local_costmap_params.yaml" command="load" />
       <rosparam file="$(find garden_guardian)/params/global_costmap_params.yaml" command="load" />
       <rosparam file="$(find garden_guardian)/params/base_local_planner_params.yaml" command="load" />
+      <!--  -->
+      <rosparam file="$(find garden_guardian)/params/move_base_params.yaml" command="load" />
+     
+      <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
+      <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
+
+      <remap from="odom" to="/outdoor_waypoint_nav/odometry/filtered" />
+   
    </node>
 
 </launch> 
