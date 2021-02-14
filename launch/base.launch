@@ -1,6 +1,7 @@
 
 <launch>
-  <include file="$(find realsense2_camera)/launch/rs_t265.launch" /> 
+  <include file="$(find realsense2_camera)/launch/rs_t265.launch">
+<arg name="initial_reset" value="true" /></include> 
 
   <node pkg="garden_guardian" type="driver.py" name="base_controller"/>
 
