@@ -9,10 +9,10 @@ ekf_se_odom: # Used only for broadcasting odom to base_link transforms
   debug: false
 
   map_frame: map
-  odom_frame: camera_odom_frame
-  base_link_frame: camera_pose_frame
+  odom_frame: odom
+  base_link_frame: base_link
   base_link_output_frame: base_link
-  world_frame: camera_odom_frame
+  world_frame: odom
   odom0: /camera/odom/sample
   odom0_config: [true, true, true,
                  true, true, true,
@@ -69,7 +69,7 @@ ekf_se_map:
 # --------------------------------------
 # imu configure:
 
-  imu0: /imu/data
+  imu0: /phone/imu/
   imu0_config: [false, false, false,
                 true,  true, true,
                 false, false, false,
