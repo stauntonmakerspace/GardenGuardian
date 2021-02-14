@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python
 # Author: Sung Jik Cha
 # Modified by: Nile Walker
 # Credits: ros turtlebot node: https://github.com/Arkapravo/turtlebot
@@ -109,7 +109,7 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
             continue
              
 if __name__ == '__main__':
-    host = '192.168.43.137'
+    host = '192.168.1.22'
     port = 5000
     try:
         if rospy.has_param('~num_callibration_itrs'):
