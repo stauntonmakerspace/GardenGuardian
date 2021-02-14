@@ -13,7 +13,7 @@ https://github.com/IntelRealSense/librealsense/blob/master/third-party/libtm/lib
   <arg name="tf_prefix"           default="$(arg camera)"/>
 
 
-  <arg name="pose_frame_id"       default="$(arg tf_prefix)_pose_frame"/>
+  <arg name="odom_frame_id"       default="$(arg tf_prefix)_odom_frame"/>
   <arg name="base_frame_id"       default="$(arg tf_prefix)_link"/>
 
   <arg name="fisheye_width"       default="848"/> 
@@ -45,7 +45,7 @@ https://github.com/IntelRealSense/librealsense/blob/master/third-party/libtm/lib
       <arg name="device_type"              value="$(arg device_type)"/>
       <arg name="json_file_path"           value="$(arg json_file_path)"/>
 
-  <arg name="pose_frame_id"       default="$(arg pose_frame_id)"/>
+  <arg name="odom_frame_id"       default="$(arg odom_frame_id)"/>
   <arg name="base_frame_id"       default="$(arg base_frame_id)"/>
 
       <arg name="enable_sync"              value="$(arg enable_sync)"/>
