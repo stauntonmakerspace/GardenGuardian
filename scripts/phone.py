@@ -18,7 +18,7 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
 
     gps_pub = rospy.Publisher('phone/gps', NavSatFix, queue_size=50)
     imu_pub = rospy.Publisher('phone/imu', Imu, queue_size=50)
-    rospy.init_node('imu_publisher', anonymous=True)
+    rospy.init_node('phone_connector', anonymous=True)
     rate = rospy.Rate(pub_freq)
 
     rospy.loginfo("waiting for device...")

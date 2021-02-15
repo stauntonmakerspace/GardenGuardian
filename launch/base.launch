@@ -1,25 +1,21 @@
-
 <launch>
   <include file="$(find garden_guardian)/launch/include/rs_t265.launch">
-<arg name="initial_reset" value="true" />
-<arg name="publish_odom_tf" value="false" />
+    <arg name="initial_reset" value="true" />
+    <arg name="publish_odom_tf" value="false" />
+    <arg name="pose_frame_id" value="base_link" />
+    <arg name="odom_frame_id" value="odom" />
+  </include>
 
-<arg name="pose_frame_id" value="base_link" />
+  <node pkg="garden_guardian" type="driver.py" name="base_controller" />
+  <node pkg="garden_guardian" type="phone.py" name="phone_connector" />
 
-<arg name="odom_frame_id" value="odom" />
-
-</include> 
-
-  <node pkg="garden_guardian" type="driver.py" name="base_controller"/>
-  <node pkg="garden_guardian" type="phone.py" name="phone_connector"/>
-
-  <include file="$(find astra_camera)/launch/astra.launch"/>
+  <include file="$(find astra_camera)/launch/astra.launch" />
 
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
-    <remap from="cloud_in" to="/camera/depth/points"/>
-    <rosparam file="$(find guardian)/params/pointcloud_to_laserscan_params.yaml" command="load" />
+    <remap from="cloud_in" to="/camera/depth/points" />
+    <rosparam file="$(find garden_guardian)/params/pointcloud_to_laserscan_params.yaml" command="load" />
   </node>
 
-  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 3"/> 
-  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /phone_link 3"/> 
+  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 3" />
+  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /phone_link 3" />
 </launch>
