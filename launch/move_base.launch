@@ -42,7 +42,7 @@
     </rosparam>
    </node>
 
-   <include file="$(find garden_guardian)/launch/include/localization_run.launch" />
+   <include file="$(find garden_guardian)/launch/include/localization.launch" />
 
    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
       <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
@@ -59,6 +59,4 @@
       <remap from="odom" to="/odometry/filtered_map" />
 
    </node>
-   <node pkg="tf" type="static_transform_publisher" name="pose_base_link" args="0 0 0 0 0 0 /camera_pose_frame /base_link 3" />
-   <node pkg="tf" type="static_transform_publisher" name="odom_odom_link" args="0 0 0 0 0 0 /odom /camera_odom_frame 3"/>
 </launch> 

@@ -17,33 +17,9 @@
 
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
     <remap from="cloud_in" to="/camera/depth/points"/>
-    <rosparam>
-      target_frame: camera_depth_frame
-      transform_tolerance: 0.01
-      min_height: 0.0
-      max_height: 1.0
-      
-      angle_min: -1.5708
-      angle_max: 1.5708
-      angle_increment: 0.0087
-      scan_time: 0.3333
-      range_min: 0.45
-      range_max: 4.0
-      use_inf: true
-      
-      #concurrency_level affects number of pc queued for processing and the number of threadsused
-      # 0: Detect number of cores
-      # 1: Single threaded
-      # 2: inf : Parallelism level
-      concurrency_level: 1
-    </rosparam>
-    <!-- <rosparam file="$(find guardian)/params/base_local_planner_params.yaml" command="load" /> -->
+    <rosparam file="$(find guardian)/params/pointcloud_to_laserscan_params.yaml" command="load" />
   </node>
 
   <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 3"/> 
-
-  <!-- These two transform publishers aren't technically necessary but it makes building 
-    configuration files and referencing existing documentation significantly easier. 
-    It also leaves an avenue open to include new odometer measurements and filtering 
-    as new data becomes available -->
+  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /phone_link 3"/> 
 </launch>
