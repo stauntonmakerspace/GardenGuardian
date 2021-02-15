@@ -12,7 +12,7 @@
 
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true" output="screen">
     <remap from="odometry/filtered" to="odometry/filtered_map" />
-    <remap from="gps/fix" to="/navsat/fix" />
-    <remap from="imu/data" to="/imu/data" />
+    <remap from="gps/fix" to="/phone/gps" />
+    <remap from="imu/data" to="/phone/imu" />
   </node>
 </launch>
