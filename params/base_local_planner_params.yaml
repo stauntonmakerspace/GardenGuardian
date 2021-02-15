@@ -1,5 +1,5 @@
 TrajectoryPlannerROS:
-  max_vel_x: 0.6
+  max_vel_x: 0.4
   min_vel_x: 0.25 # Allowing velocities too low will will stop the obstacle avoidance because low velocities won't actually be high enough to move the robot
   max_vel_theta: 1.0
   min_vel_theta: -1.0
@@ -14,8 +14,8 @@ TrajectoryPlannerROS:
   escape_vel: -0.2
 
   # Goal Tolerance Parameters
-  yaw_goal_tolerance: 0.1  # in rads
-  xy_goal_tolerance: 0.25  # in meters
+  yaw_goal_tolerance: 0.5  # in rads
+  xy_goal_tolerance: 0.5  # in meters
 
   latch_xy_goal_tolerance: false
 
