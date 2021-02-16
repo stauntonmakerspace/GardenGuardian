@@ -20,7 +20,7 @@
 
    <node pkg="imu_filter_madgwick" type="imu_filter_node"  name="imu_filter" >
       <remap from="imu/data_raw" to="phone/imu" />
-      <remap from="imu/mag" to="arduino/magnetic_field" />
+      <remap from="imu/mag" to="phone/magnetic_field" />
       <param name="use_magnetic_field_msg" value="true" />
    </node>
    
