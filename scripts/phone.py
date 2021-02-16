@@ -118,7 +118,7 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
             continue
              
 if __name__ == '__main__':
-    host = '10.0.0.228'
+    host = '192.168.1.68'
     port = 5000
     try:
         if rospy.has_param('~num_callibration_itrs'):

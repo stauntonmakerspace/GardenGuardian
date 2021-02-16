@@ -5,9 +5,9 @@
     <arg name="pose_frame_id" value="base_link" />
     <arg name="odom_frame_id" value="odom" />
   </include>
-
+  <!-- Launch PCA9685 Connection -->
   <node pkg="garden_guardian" type="driver.py" name="base_controller" />
-
+  <!-- Launch Hyper IMU Connection -->
   <node pkg="garden_guardian" type="phone.py" name="phone_controller" />
 
   <include file="$(find astra_camera)/launch/astra.launch" />
