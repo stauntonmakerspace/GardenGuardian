@@ -7,7 +7,6 @@
   </include>
 
   <node pkg="garden_guardian" type="driver.py" name="base_controller" />
-  <node pkg="garden_guardian" type="phone.py" name="phone_connector" />
 
   <include file="$(find astra_camera)/launch/astra.launch" />
 
@@ -15,7 +14,4 @@
     <remap from="cloud_in" to="/camera/depth/points" />
     <rosparam file="$(find garden_guardian)/params/pointcloud_to_laserscan_params.yaml" command="load" />
   </node>
-
-  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 3" />
-  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /phone_link 3" />
 </launch>

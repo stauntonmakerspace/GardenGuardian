@@ -17,4 +17,14 @@
       <remap from="odom" to="/odometry/filtered_map" />
 
    </node>
+
+   <node pkg="imu_filter_madgwick" type="imu_filter_node"  name="imu_filter" >
+      <remap from="imu/data_raw" to="/arduino/imu" />
+      <remap from="imu/mag" to="/arduino/magnetic_field" />
+      <param name="use_magnetic_field_msg" value="true" />
+   </node>
+   
+  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 3" />
+  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /imu 3" />
+  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /gps 3" />
 </launch> 
