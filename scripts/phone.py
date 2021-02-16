@@ -17,7 +17,7 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
     iter_count = 0
     num_callibration_itrs = 60
 
-    gps_pub = rospy.Publisher('phone/gps', NavSatFix, queue_size=50)
+    gps_pub = rospy.Publisher('phone/fix', NavSatFix, queue_size=50)
     imu_pub = rospy.Publisher('phone/imu', Imu, queue_size=50)
     mag_pub = rospy.Publisher('phone/magnetic_field', MagneticField, queue_size=50)
 

@@ -1,7 +1,10 @@
 <launch>
+   <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 3" />
+   <node pkg="tf" type="static_transform_publisher" name="base_phone_link" args="0 0 0 0 0 0 /base_link /phone_link 100" />
+ 
    <!-- <include file="$(find garden_guardian)/launch/include/gmapping.launch" /> -->
    <include file="$(find garden_guardian)/launch/include/localization.launch" />
-
+   
    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
       <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
       <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
@@ -16,15 +19,6 @@
 
       <remap from="odom" to="/odometry/filtered_map" />
 
-   </node>
-  
-  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 3" />
-  <node pkg="tf" type="static_transform_publisher" name="base_phone_link" args="0 0 0 0 0 0 /base_link /phone_link 100" />
-
-   <node pkg="imu_filter_madgwick" type="imu_filter_node"  name="imu_filter" >
-      <remap from="imu/data_raw" to="phone/imu" />
-      <remap from="imu/mag" to="phone/magnetic_field" />
-      <param name="use_magnetic_field_msg" value="true" />
    </node>
  
 </launch> 

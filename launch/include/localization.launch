@@ -9,10 +9,16 @@
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
     <remap from="odometry/filtered" to="odometry/filtered_map" />
   </node>
+  
+  <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter">
+    <remap from="imu/data_raw" to="phone/imu" />
+    <remap from="imu/mag" to="phone/magnetic_field" />
+    <param name="use_magnetic_field_msg" value="true" />
+  </node>
 
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true" output="screen">
     <remap from="odometry/filtered" to="odometry/filtered_map" />
-    <remap from="gps/fix" to="/android/fix" />
-    <remap from="imu/data" to="/android/imu" />
+    <remap from="gps/fix" to="/phone/fix" />
+    <remap from="imu/data" to="/imu/data" />
   </node>
 </launch>
