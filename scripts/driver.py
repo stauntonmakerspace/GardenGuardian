@@ -85,8 +85,8 @@ class Driver:
         right_speed = linear - angular 
 	max_speed = left_speed if left_speed > right_speed else right_speed
       	if max_speed > 1:
-		left_speed /= max_speed
-		right_speed /= max_speed
+            left_speed /= max_speed
+            right_speed /= max_speed
         self._left_speed_percent = (
             left_speed/self._max_speed)
         self._right_speed_percent = (
