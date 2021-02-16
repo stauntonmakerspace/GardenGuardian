@@ -1,20 +1,43 @@
 <launch>
+   <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 3" />
+   <node pkg="tf" type="static_transform_publisher" name="base_phone_link" args="0 0 0 0 0 0 /base_link /phone_link 100" />
+
    <!-- <include file="$(find garden_guardian)/launch/include/gmapping.launch" /> -->
    <include file="$(find garden_guardian)/launch/include/localization.launch" />
 
-   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-      <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
-      <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
-      <rosparam file="$(find garden_guardian)/params/local_costmap_params.yaml" command="load" />
-      <rosparam file="$(find garden_guardian)/params/global_costmap_params.yaml" command="load" />
-      <rosparam file="$(find garden_guardian)/params/base_local_planner_params.yaml" command="load" />
-      
-      <rosparam file="$(find garden_guardian)/params/move_base_params.yaml" command="load" />
+   <group ns="controller_1">
+      <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+         <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+         <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+         <rosparam file="$(find garden_guardian)/params/local_costmap_params.yaml" command="load" />
+         <rosparam file="$(find garden_guardian)/params/global_costmap_params.yaml" command="load" />
+         <rosparam file="$(find garden_guardian)/params/base_local_planner_params.yaml" command="load" />
 
-      <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
-      <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+         <rosparam file="$(find garden_guardian)/params/move_base_params.yaml" command="load" />
 
-      <remap from="odom" to="/odometry/filtered_map" />
+         <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
+         <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
 
-   </node>
+         <remap from="odom" to="/odometry/filtered_map" />
+         <remap from="cmd_vel" to="/cmd_vel1" />
+
+      </node>
+   </group>
+   <group ns="controller_2">
+      <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+         <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+         <rosparam file="$(find garden_guardian)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+         <rosparam file="$(find garden_guardian)/params/local_costmap_params.yaml" command="load" />
+         <rosparam file="$(find garden_guardian)/params/global_costmap_params.yaml" command="load" />
+         <rosparam file="$(find garden_guardian)/params/base_local_planner_params.yaml" command="load" />
+
+         <rosparam file="$(find garden_guardian)/params/move_base_params.yaml" command="load" />
+
+         <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
+         <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+
+         <remap from="odom" to="/odometry/filtered_map" />
+         <remap from="cmd_vel" to="/cmd_vel2" />
+      </node>
+   </group>
 </launch> 
