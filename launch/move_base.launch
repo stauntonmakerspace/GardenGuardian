@@ -25,6 +25,6 @@
    </node>
    
   <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /camera_link 3" />
-  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /imu 3" />
-  <node pkg="tf" type="static_transform_publisher" name="base_cam_link" args="0 0 0 0 0 0 /base_link /gps 3" />
+  <node pkg="tf" type="static_transform_publisher" name="base_imu_link" args="0 0 0 0 0 0 /base_link /imu 3" />
+  <node pkg="tf" type="static_transform_publisher" name="base_gps_link" args="0 0 0 0 0 0 /base_link /gps 3" />
 </launch> 
