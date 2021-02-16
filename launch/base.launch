@@ -8,6 +8,8 @@
 
   <node pkg="garden_guardian" type="driver.py" name="base_controller" />
 
+  <node pkg="garden_guardian" type="phone.py" name="phone_controller" />
+
   <include file="$(find astra_camera)/launch/astra.launch" />
 
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
