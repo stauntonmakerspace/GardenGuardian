@@ -59,7 +59,6 @@ class Driver:
         self._timeout = rospy.get_param('~timeout', 3)
         self._rate = rospy.get_param('~rate', 10)
         self._max_speed = rospy.get_param('~max_speed', 1)
-        self._wheel_base = rospy.get_param('~wheel_base', .5)
 
         # Assign pins to motors. These may be distributed
         # differently depending on how you've built your robot
@@ -82,15 +81,12 @@ class Driver:
         angular = message.angular.z
 
         # Calculate wheel speeds in m/s
-        left_speed = linear + angular #* self._wheel_base/2
-        right_speed = linear - angular #* self._wheel_base/2
-
-        # Ideally we'd now use the desired wheel speeds along
-        # with data from wheel speed sensors to come up with the
-        # power we need to apply to the wheels, but we don't have
-        # wheel speed sensors. Instead, we'll simply convert m/s
-        # into percent of maximum wheel speed, which gives us a
-        # duty cycle that we can apply to each motor.
+        left_speed = linear + angular 
+        right_speed = linear - angular 
+	max_speed = left_speed if left_speed > right_speed else right_speed
+      	if max_speed > 1:
+		left_speed /= max_speed
+		right_speed /= max_speed
         self._left_speed_percent = (
             left_speed/self._max_speed)
         self._right_speed_percent = (
