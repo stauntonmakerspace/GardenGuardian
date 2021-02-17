@@ -1,4 +1,4 @@
-shutdown_costmaps: true
+shutdown_costmaps: false
 
 controller_frequency: 20.0
 controller_patience: 15.0
@@ -10,4 +10,5 @@ oscillation_timeout: 0.0
 oscillation_distance: 0.2
 
 recovery_behavior_enabled: true
-clearing_rotation_allowed: true #For rn
+
+clearing_rotation_allowed: false #For rn
