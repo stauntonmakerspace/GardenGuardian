@@ -42,7 +42,6 @@ class Motor:
         GPIO.setup(direction_pinA, GPIO.OUT)
         GPIO.setup(direction_pinB, GPIO.OUT)
 
-      
     def move(self, speed_percent):
         speed = int(_clip(abs(speed_percent) * 0xffff, 0, 0xffff))
         kit.channels[self._servo_num].duty_cycle = speed
@@ -81,10 +80,10 @@ class Driver:
         angular = message.angular.z
 
         # Calculate wheel speeds in m/s
-        left_speed = linear + angular 
-        right_speed = linear - angular 
+        left_speed = linear + angular
+        right_speed = linear - angular
         max_speed = left_speed if left_speed > right_speed else right_speed
-      	if max_speed > 1:
+        if max_speed > 1:
             left_speed /= max_speed
             right_speed /= max_speed
         self._left_speed_percent = (
