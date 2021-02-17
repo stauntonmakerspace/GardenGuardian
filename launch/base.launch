@@ -9,7 +9,7 @@
   <node pkg="garden_guardian" type="driver.py" name="base_controller" />
   <!-- Launch Hyper IMU Connection -->
   <node pkg="garden_guardian" type="phone.py" name="phone_controller">
-    <param name="host" value="$(env ROS_IP)"/>
+    <param name="host" value="$(optenv ROS_IP)"/>
   </node>
 
   <include file="$(find astra_camera)/launch/astra.launch" />

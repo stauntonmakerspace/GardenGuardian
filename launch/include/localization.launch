@@ -15,7 +15,7 @@
     <remap from="imu/mag" to="phone/magnetic_field" />
     <!-- I'm currently testing across multiple versions of ROS which have different default values 
     some are required for the current set up to work properly so is specified here-->
-
+    <param name="use_mag" value="true" />
     <param name="use_magnetic_field_msg" value="true" />
     <param name="world_frame" value="enu"/>
     <param name="fixed_frame" value="map"/>
