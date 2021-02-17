@@ -83,7 +83,7 @@ class Driver:
         # Calculate wheel speeds in m/s
         left_speed = linear + angular 
         right_speed = linear - angular 
-	max_speed = left_speed if left_speed > right_speed else right_speed
+        max_speed = left_speed if left_speed > right_speed else right_speed
       	if max_speed > 1:
             left_speed /= max_speed
             right_speed /= max_speed
