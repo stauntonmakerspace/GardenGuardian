@@ -118,15 +118,12 @@ def imu_publisher(UDP_IP,UDP_PORT,BUFFER_SIZE=1024,debug = False):
             continue
              
 if __name__ == '__main__':
-    host = '192.168.1.98'
-    port = 5000
     try:
         if rospy.has_param('~num_callibration_itrs'):
             num_callibration_itrs = rospy.get_param('~num_callibration_itrs')
-        if rospy.has_param('~host'):
-            host = rospy.get_param('~host')
-        if rospy.has_param('port'):
-            port = rospy.get_param('port')
+        
+        host = rospy.get_param('~host', '192.168.1.98')
+        port = rospy.get_param('~port', 5000)
         imu_publisher(host,port,1024)
     except rospy.ROSInterruptException:
         pass

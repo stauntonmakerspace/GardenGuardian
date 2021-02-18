@@ -23,6 +23,8 @@ kit = PCA9685(i2c_bus0)
 kit.frequency = 50
 print("Done initializing")
 
+def _sign(num):
+    return 1 if num >= 0 else -1
 def _clip(value, minimum, maximum):
     """Ensure value is between minimum and maximum."""
 
@@ -57,6 +59,8 @@ class Driver:
         self._last_received = rospy.get_time()
         self._timeout = rospy.get_param('~timeout', 3)
         self._rate = rospy.get_param('~rate', 10)
+        
+        self._min_speed = rospy.get_param('~min_speed',.25)
         self._max_speed = rospy.get_param('~max_speed', 1)
 
         # Assign pins to motors. These may be distributed
@@ -78,18 +82,23 @@ class Driver:
         # Extract linear and angular velocities from the message
         linear = message.linear.x 
         angular = message.angular.z
+        # Account for minimum values 
+        if linear != 0:
+        	linear = _sign(message.linear.x) * _clip(abs(message.linear.x), self._min_speed, self._max_speed) 
+        else:
+                angular = _sign(message.angular.z) * _clip(abs(message.angular.z), .2, 1) 
 
         # Calculate wheel speeds in m/s
         left_speed = linear + angular
         right_speed = linear - angular
-        max_speed = left_speed if left_speed > right_speed else right_speed
-        if max_speed > 1:
-            left_speed /= max_speed
-            right_speed /= max_speed
+        top_speed = left_speed if left_speed > right_speed else right_speed
+        if top_speed > self._max_speed:
+            left_speed /= top_speed
+            right_speed /= top_speed
         self._left_speed_percent = (
-            left_speed/self._max_speed)
+            left_speed/self.top_speed)
         self._right_speed_percent = (
-            right_speed/self._max_speed)
+            right_speed/self.top_speed)
 
     def run(self):
         """The control loop of the driver."""
