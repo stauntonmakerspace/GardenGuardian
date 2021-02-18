@@ -3,7 +3,7 @@
 
   <rosparam command="load" file="$(find garden_guardian)/params/ekf_params.yaml" />
   <rosparam command="load" file="$(find garden_guardian)/params/navsat_params.yaml" />
-  <!-- Transform between base link and Adam frame is already provided by the T265 Transform between base link and odom frame is already provided by the T265 -->
+
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true" />
 
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
@@ -13,8 +13,6 @@
   <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter">
     <remap from="imu/data_raw" to="phone/imu" />
     <remap from="imu/mag" to="phone/magnetic_field" />
-    <!-- I'm currently testing across multiple versions of ROS which have different default values 
-    some are required for the current set up to work properly so is specified here-->
     <param name="use_mag" value="true" />
     <param name="use_magnetic_field_msg" value="true" />
     <param name="world_frame" value="enu"/>

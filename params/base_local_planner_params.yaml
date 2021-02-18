@@ -1,19 +1,24 @@
-TrajectoryPlannerROS:
-  max_vel_x: 0.35
-  min_vel_x: 0.25 # Allowing velocities too low will will stop the obstacle avoidance because low velocities won't actually be high enough to move the robot  
-  escape_vel: -0.23
+TebLocalPlannerROS:
+  # Robot
+  max_vel_x: .5
+  max_vel_x_backwards: 0.35
   max_vel_theta: 1
-  min_vel_theta: -1
-  min_in_place_vel_theta: 0.6
+  acc_lim_x: 1
+  acc_lim_theta: .6
+  min_turning_radius: 0.0
+  
+  footprint_model:
+    type: circular
+    radius: .15
 
-  acc_lim_theta: 1
-  acc_lim_x: .25
   xy_goal_tolerance: 0.2
   yaw_goal_tolerance: 0.1
+  free_goal_vel: true
+  feasibility_check_no_poses: 0 
+  inflation_dist: .05
+  visualize_hc_graph: true
+  
+  inflation_dist: 0.3
 
-  holonomic_robot: false
-  latch_xy_goal_tolerance: true
-
-  oscillation_reset_dist: 0.25
 
 

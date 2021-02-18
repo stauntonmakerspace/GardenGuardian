@@ -4,6 +4,6 @@ min_height: 0.0
 max_height: 1.0
 
 range_max: 8.0
-use_inf: true
+use_inf: false
 
 concurrency_level: 1

@@ -5,15 +5,13 @@
         base_frame: base_link
         map_frame: map
   
-        map_update_interval: 3 # Publish new map
+        map_update_interval: 1 # Publish new map
   
         maxUrange: 7 # Should be just less than sensor range
         maxRange: 8.1 # Should be just greater than sensor range
-        particles: 100 # Increased from 80
   
         # Update frequencies
-        linearUpdate: 0.25
-        temporalUpdate: .25
+        # linearUpdate: 0.25
       </rosparam>
      </node>
 </launch>
