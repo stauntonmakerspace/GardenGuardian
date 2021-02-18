@@ -95,10 +95,8 @@ class Driver:
         if top_speed > self._max_speed:
             left_speed /= top_speed
             right_speed /= top_speed
-        self._left_speed_percent = (
-            left_speed/self.top_speed)
-        self._right_speed_percent = (
-            right_speed/self.top_speed)
+        self._left_speed_percent = left_speed
+        self._right_speed_percent = right_speed
 
     def run(self):
         """The control loop of the driver."""
